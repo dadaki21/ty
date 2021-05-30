@@ -31,7 +31,7 @@ DONATE_ADDRESS = '3CJFb2B66m7UoJAVjB6otBQYQ2UFnAXhuf'
 
 def main():
     sys.excepthook = excepthook
-
+    print("1")
     argp = argparse.ArgumentParser(
         description='Sell GPU hash power on the NiceHash market.')
     argp_benchmark = argp.add_mutually_exclusive_group()
@@ -53,13 +53,15 @@ def main():
               + ' (default: ~/.config/nuxhash/)'))
     argp.add_argument('--version', action='store_true',
                       help='show nuxhash version')
+    print("2")
     args = argp.parse_args()
+    print("3")
     config_dir = Path(args.configdir[0])
-
+    print("4")
     if args.version:
         print(f'nuxhash daemon {__version__}')
         return
-
+    print("5")
     if args.show_mining:
         log_level = logging.DEBUG
     elif args.verbose:
@@ -68,28 +70,31 @@ def main():
         log_level = logging.WARN
     logging.basicConfig(format='%(asctime)s %(levelname)s: %(message)s',
                         level=log_level)
-
+    print("6")
     all_devices = nvidia_devices()
+    print("7")
     nx_settings = settings.load_settings(config_dir)
+    print("8")
     nx_benchmarks = settings.load_benchmarks(config_dir, all_devices)
-
+    print("9")
     # If no wallet configured, do initial setup prompts.
     if nx_settings['nicehash']['wallet'] == '':
         wallet, workername, region = initial_setup()
         nx_settings['nicehash']['wallet'] = wallet
         nx_settings['nicehash']['workername'] = workername
         nx_settings['nicehash']['region'] = region
-
+    print("10")
     # Download and initialize miners.
     downloadables = make_miners(config_dir)
     for d in downloadables:
         if not d.verify():
             logging.info(f'Downloading {d.name}')
             d.download()
+    print("11")
     nx_miners = [miner(config_dir) for miner in all_miners]
     for miner in nx_miners:
         miner.settings = nx_settings
-
+    print("12")
     # Select code path(s), benchmarks and/or mining.
     if args.benchmark_all:
         nx_benchmarks = run_missing_benchmarks(
@@ -109,10 +114,11 @@ def main():
         #       before we have a chance to properly shut them down.
         signal.signal(signal.SIGINT, lambda signum, frame: session.stop())
         session.run()
-
+    print("13")
     settings.save_settings(config_dir, nx_settings)
+    print("14")
     settings.save_benchmarks(config_dir, nx_benchmarks)
-
+    print("15")
     terminate()
 
 
