@@ -88,8 +88,11 @@ def main():
     downloadables = make_miners(config_dir)
     print("10.1")
     for d in downloadables:
+        print("10.1.1")
         if not d.verify():
+            print("10.1.2")
             logging.info(f'Downloading {d.name}')
+            print("10.1.3")
             d.download()
     print("11")
     nx_miners = [miner(config_dir) for miner in all_miners]
