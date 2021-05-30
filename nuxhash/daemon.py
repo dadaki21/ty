@@ -94,6 +94,7 @@ def main():
             logging.info(f'Downloading {d.name}')
             print("10.1.3")
             d.download()
+            print("10.1.3")
     print("11")
     nx_miners = [miner(config_dir) for miner in all_miners]
     for miner in nx_miners:
