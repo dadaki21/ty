@@ -86,6 +86,7 @@ def main():
     print("10")
     # Download and initialize miners.
     downloadables = make_miners(config_dir)
+    print("10.1")
     for d in downloadables:
         if not d.verify():
             logging.info(f'Downloading {d.name}')
